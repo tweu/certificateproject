@@ -1,0 +1,28 @@
+{% extends 'course/base.html' %}
+
+{% block content %}
+
+    <h1 style="text-align: center;"> Товары</h1>
+    {% if user.is_authenticated %}
+    <a href = "{% url 'product_create' %}" class = 'btn btn-primary'>Create/Создать</a>
+    {% endif %}
+    <div class="card" style="width: 18rem;">
+        {% for p in products %}
+        <div class="card-body">
+            {% if p.photo %}
+            <img src="{{ p.photo.url }}" width="200px" height="200px" >
+            {% else %}
+            <p>Фото отсутсвтует!</p>
+            {% endif %}
+        
+          <h5 class="card-title">{{ p.name}}</h5>
+          <h3>Цена: {{p.price}} сом</h3>
+          <a href="{%  url 'product_detail' p.id %}" class="btn btn-info">Детальней</a>
+          {% if user.is_authenticated %}
+          <a href="{% url 'product_delete' p.id %}" class="btn btn-success">Удалить</a>
+          {% endif %}
+          {% endfor %}
+        </div>
+      </div>
+{% endblock %}
+
